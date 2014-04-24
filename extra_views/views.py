@@ -200,7 +200,7 @@ class MultiFormMixin(object):
         for form in extra_forms:
             if hasattr(form, 'save') and hasattr(form.save, '__call__'):
                 extra_obj = form.save(commit=False)
-                if not hasattr(form.settings, 'foreign_key_field') and not hasattr(form.settings, 'field_name_for_object'):
+                if 'foreign_key_field' not in form.settings and 'field_name_for_object' not in form.settings:
                     raise ImproperlyConfigured('Extra form `%s` has no `foreign_key_field` defined.' % form)
                 try:
                     setattr(extra_obj, form.settings.get('foreign_key_field', form.settings.get('field_name_for_object', None)), object)
